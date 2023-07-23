@@ -6,3 +6,5 @@ TO RUN :-
 "npm run dev" which will behind the scene run the command nodemon app.js
 
 public folder - It will contain all our stuff like JavaScript, CSS, images and so on
+
+if we get Authentication failed error at any point of time, that means that the database connection has failed because of the username password URL being wrong.

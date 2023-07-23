@@ -5,10 +5,16 @@ require("dotenv").config();
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
 
+// connected db.js file to the application
+const connectDB = require("./server/config/db");
+
 const app = express();
 // process.env.PORT is used to tell where the application can be access from on the server.
 // 5000 port is for local use.
 const PORT = 5000 || process.env.PORT;
+
+// Connect to DB
+connectDB();
 
 // to use the public folder (contains css, imgs, js)
 app.use(express.static("public"));
