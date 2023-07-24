@@ -16,6 +16,10 @@ const PORT = 5000 || process.env.PORT;
 // Connect to DB
 connectDB();
 
+// in order to pass data, we are adding a middleware here
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 // to use the public folder (contains css, imgs, js)
 app.use(express.static("public"));
 
