@@ -4,9 +4,13 @@ require("dotenv").config();
 // making express server
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+// to grab cookies, save them
+const cookieParser = require("cookie-parser");
+const MongoStore = require("connect-mongo");
 
 // connected db.js file to the application
 const connectDB = require("./server/config/db");
+const session = require("express-session");
 
 const app = express();
 // process.env.PORT is used to tell where the application can be access from on the server.
@@ -19,6 +23,18 @@ connectDB();
 // in order to pass data, we are adding a middleware here
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
+
+app.use(
+    session({
+        secret: "keyboard cat",
+        resave: false,
+        saveUninitialized: true,
+        store: MongoStore.create({
+            mongoUrl: process.env.MONGODB_URI,
+        }),
+    })
+);
 
 // to use the public folder (contains css, imgs, js)
 app.use(express.static("public"));
