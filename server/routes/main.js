@@ -31,6 +31,7 @@ router.get("", async (req, res) => {
             data,
             current: page,
             nextPage: hasNextPage ? nextPage : null,
+            currentRoute: "/",
         });
     } catch (err) {
         console.log(err);
@@ -54,6 +55,7 @@ router.get("/post/:id", async (req, res) => {
         res.render("post", {
             locals,
             data,
+            currentRoute: `/post/${slug}`,
         });
     } catch (err) {
         console.log(err);
@@ -88,7 +90,7 @@ router.post("/search", async (req, res) => {
 });
 
 router.get("/about", (req, res) => {
-    res.render("about");
+    res.render("about", { currentRoute: "/about" });
 });
 
 // function insertPostdata() {

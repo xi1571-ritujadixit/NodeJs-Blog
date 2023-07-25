@@ -4,13 +4,15 @@ require("dotenv").config();
 // making express server
 const express = require("express");
 const expressLayout = require("express-ejs-layouts");
+const methodOverride = require("method-override");
 // to grab cookies, save them
 const cookieParser = require("cookie-parser");
+const session = require("express-session");
 const MongoStore = require("connect-mongo");
 
 // connected db.js file to the application
 const connectDB = require("./server/config/db");
-const session = require("express-session");
+const { isActiveRoute } = require("./server/helpers/routeHelpers");
 
 const app = express();
 // process.env.PORT is used to tell where the application can be access from on the server.
@@ -24,6 +26,7 @@ connectDB();
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
+app.use(methodOverride("_method"));
 
 app.use(
     session({
@@ -43,6 +46,8 @@ app.use(express.static("public"));
 app.use(expressLayout);
 app.set("layout", "./layouts/main");
 app.set("view engine", "ejs");
+
+app.locals.isActiveRoute = isActiveRoute;
 
 // for all the routes
 app.use("/", require("./server/routes/main"));
